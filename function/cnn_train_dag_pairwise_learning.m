@@ -53,9 +53,9 @@ if ~evaluateMode
 end
 
 writeLogToFile = false;
-if lenght(opts.fileLog) ~= 0
+if size(opts.fileLog) ~= 0
   writeLogToFile = true;
-  LogFileID = fopen('log.out', 'w')
+  LogFileID = fopen('log.out', 'w');
 end
 
 % -------------------------------------------------------------------------

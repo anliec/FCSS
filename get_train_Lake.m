@@ -11,7 +11,7 @@ count_data = 0;
 count_label = 0;
 count_label1 = 0;
 
-for ss = 1:length(folder_data)
+for ss = 1:length(folder_data) - 1
 	fprintf('image sequence: %d\n',ss);
 	subfolder_name = fullfile(folder_name,folder_data(ss).name);
     subfolder_data = dir(subfolder_name);

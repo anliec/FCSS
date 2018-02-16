@@ -12,17 +12,17 @@ function main_FCSS_train_Tatsunori(varargin)
     %load('data/imdb_correspondence_Tatsunori.mat');
     load('data/imdb_correspondence_Lake.mat');
 
-    init_model = false; % Using pretrained model as an initial parameter (or not)
+    init_model = true; % Using pretrained model as an initial parameter (or not)
     net = init_FCSS(init_model);
 
-    trainOpts.batchSize = 2200;
-    trainOpts.numEpochs = 765;
+    trainOpts.batchSize = 850;
+    trainOpts.numEpochs = 10500;
     trainOpts.continue = true;
     trainOpts.gpus = 1;
     trainOpts.learningRate = 1e-3;
     trainOpts.derOutputs = {'objective', 1};
     trainOpts.expDir = 'data/fcss_Tatsunori';
-    trainOpts.expFrequency = 100;
+    trainOpts.expFrequency = 500;
     trainOpts = vl_argparse(trainOpts, varargin);
 
     cnn_train_dag_pairwise_learning(net, imdb, getBatch, trainOpts);

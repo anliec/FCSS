@@ -1,0 +1,11 @@
+*.png
+*.jpg
+*.zip
+matconvnet-*
+SIFT*
+pax*
+vlfeat*
+model/*
+PFflow/*
+datasets/*
+data/*

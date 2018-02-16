@@ -11,6 +11,7 @@ function [net,stats] = cnn_train_dag(net, imdb, getBatch, varargin)
 
 opts.expDir = fullfile('data','exp') ;
 opts.expFrequency = 1 ; % frequency at witch the network will be writed to disk
+opts.fileLog = '' ;  % file where the logs will be writen (in addition to screen) '' mean do not write to file
 opts.continue = true ;
 opts.batchSize = 256 ;
 opts.numSubBatches = 1 ;
@@ -49,6 +50,12 @@ if ~evaluateMode
   if isempty(opts.derOutputs)
     error('DEROUTPUTS must be specified when training.\n') ;
   end
+end
+
+writeLogToFile = false;
+if lenght(opts.fileLog) ~= 0
+  writeLogToFile = true;
+  LogFileID = fopen('log.out', 'w')
 end
 
 % -------------------------------------------------------------------------
@@ -194,6 +201,10 @@ start = tic ;
 for t=1:params.batchSize:numel(subset)
   fprintf('%s: epoch %02d: %3d/%3d:', mode, epoch, ...
           fix((t-1)/params.batchSize)+1, ceil(numel(subset)/params.batchSize)) ;
+  if writeLogToFile == true
+    fprintf(LogFileID, '%s: epoch %02d: %3d/%3d:', mode, epoch, ...
+            fix((t-1)/params.batchSize)+1, ceil(numel(subset)/params.batchSize)) ;
+  end
   batchSize = min(params.batchSize, numel(subset) - t + 1) ;
 
   for s=1:params.numSubBatches
@@ -248,11 +259,20 @@ for t=1:params.batchSize:numel(subset)
   end
 
   fprintf(' %.1f (%.1f) Hz', averageSpeed, currentSpeed) ;
+  if writeLogToFile == true
+    fprintf(LogFileID, ' %.1f (%.1f) Hz', averageSpeed, currentSpeed) ;
+  end
   for f = setdiff(fieldnames(stats)', {'num', 'time'})
     f = char(f) ;
     fprintf(' %s: %.3f', f, stats.(f)) ;
+    if writeLogToFile == true
+      fprintf(writeLogToFile, ' %s: %.3f', f, stats.(f)) ;
+    end
   end
   fprintf('\n') ;
+  if writeLogToFile == true
+    fprintf(LogFileID,'\n') ;
+  end
 end
 
 % Save back to state.

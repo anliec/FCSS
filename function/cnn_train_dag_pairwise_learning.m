@@ -95,6 +95,7 @@ for epoch=start+1:opts.numEpochs
   params.val = opts.val(randperm(numel(opts.val))) ;
   params.imdb = imdb ;
   params.getBatch = getBatch ;
+  params.writeLogToFile = writeLogToFile ;
 
   if numel(opts.gpus) <= 1
     [net, state] = processEpoch(net, state, params, 'train') ;
@@ -201,7 +202,7 @@ start = tic ;
 for t=1:params.batchSize:numel(subset)
   fprintf('%s: epoch %02d: %3d/%3d:', mode, epoch, ...
           fix((t-1)/params.batchSize)+1, ceil(numel(subset)/params.batchSize)) ;
-  if writeLogToFile == true
+  if params.writeLogToFile == true
     fprintf(LogFileID, '%s: epoch %02d: %3d/%3d:', mode, epoch, ...
             fix((t-1)/params.batchSize)+1, ceil(numel(subset)/params.batchSize)) ;
   end
@@ -259,18 +260,18 @@ for t=1:params.batchSize:numel(subset)
   end
 
   fprintf(' %.1f (%.1f) Hz', averageSpeed, currentSpeed) ;
-  if writeLogToFile == true
+  if params.writeLogToFile == true
     fprintf(LogFileID, ' %.1f (%.1f) Hz', averageSpeed, currentSpeed) ;
   end
   for f = setdiff(fieldnames(stats)', {'num', 'time'})
     f = char(f) ;
     fprintf(' %s: %.3f', f, stats.(f)) ;
-    if writeLogToFile == true
+    if params.writeLogToFile == true
       fprintf(writeLogToFile, ' %s: %.3f', f, stats.(f)) ;
     end
   end
   fprintf('\n') ;
-  if writeLogToFile == true
+  if params.writeLogToFile == true
     fprintf(LogFileID,'\n') ;
   end
 end

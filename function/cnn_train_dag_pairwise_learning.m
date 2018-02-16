@@ -10,6 +10,7 @@ function [net,stats] = cnn_train_dag(net, imdb, getBatch, varargin)
 % the terms of the BSD license (see the COPYING file).
 
 opts.expDir = fullfile('data','exp') ;
+opts.expFrequency = 1 ; % frequency at witch the network will be writed to disk
 opts.continue = true ;
 opts.batchSize = 256 ;
 opts.numSubBatches = 1 ;
@@ -79,9 +80,9 @@ for epoch=start+1:opts.numEpochs
   params.epoch = epoch ;
   params.learningRate = opts.learningRate(min(epoch, numel(opts.learningRate))) ;
 %   params.train = opts.train(randperm(numel(opts.train))) ; % shuffle
-  ri = randperm(numel(opts.train)/2)*2; 
-  ri1 = ri-1; 
-  index =  [ri1;ri]; 
+  ri = randperm(numel(opts.train)/2)*2;
+  ri1 = ri-1;
+  index =  [ri1;ri];
   index = index(:)';
   params.train = opts.train(index);
   params.val = opts.val(randperm(numel(opts.val))) ;
@@ -91,7 +92,7 @@ for epoch=start+1:opts.numEpochs
   if numel(opts.gpus) <= 1
     [net, state] = processEpoch(net, state, params, 'train') ;
     [net, state] = processEpoch(net, state, params, 'val') ;
-    if ~evaluateMode
+    if ~evaluateMode && mod(epoch, opts.expFrequency) == 0
       saveState(modelPath(epoch), net, state) ;
     end
     lastStats = state.stats ;
@@ -99,7 +100,7 @@ for epoch=start+1:opts.numEpochs
     spmd
       [net, state] = processEpoch(net, state, params, 'train') ;
       [net, state] = processEpoch(net, state, params, 'val') ;
-      if labindex == 1 && ~evaluateMode
+      if labindex == 1 && ~evaluateMode && mod(epoch, opts.expFrequency) == 0
         saveState(modelPath(epoch), net, state) ;
       end
       lastStats = state.stats ;

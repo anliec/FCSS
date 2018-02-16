@@ -8,10 +8,10 @@ function main_FCSS_train_Tatsunori(varargin)
     addpath('init_model');
     addpath('model');
     addpath('function');
-    
+
     %load('data/imdb_correspondence_Tatsunori.mat');
     load('data/imdb_correspondence_Lake.mat');
-    
+
     init_model = false; % Using pretrained model as an initial parameter (or not)
     net = init_FCSS(init_model);
 
@@ -22,9 +22,10 @@ function main_FCSS_train_Tatsunori(varargin)
     trainOpts.learningRate = 1e-3;
     trainOpts.derOutputs = {'objective', 1};
     trainOpts.expDir = 'data/fcss_Tatsunori';
+    trainOpts.expFrequency = 100;
     trainOpts = vl_argparse(trainOpts, varargin);
 
-    cnn_train_dag_pairwise_learning(net, imdb, getBatch, trainOpts);    
+    cnn_train_dag_pairwise_learning(net, imdb, getBatch, trainOpts);
 end
 
 function inputs = getBatch()

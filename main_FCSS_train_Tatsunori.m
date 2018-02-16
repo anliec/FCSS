@@ -23,6 +23,7 @@ function main_FCSS_train_Tatsunori(varargin)
     trainOpts.derOutputs = {'objective', 1};
     trainOpts.expDir = 'data/fcss_Tatsunori';
     trainOpts.expFrequency = 500;
+    trainOpts.fileLog = 'log.out'
     trainOpts = vl_argparse(trainOpts, varargin);
 
     cnn_train_dag_pairwise_learning(net, imdb, getBatch, trainOpts);

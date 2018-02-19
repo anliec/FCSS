@@ -71,9 +71,9 @@ classdef CorrespondenceLoss < dagnn.Loss
         cost_match = cost_match(1:num_train);
         
         %% Matching Visualization (Positive)
-%        matchedPoints1 = [points1y(index1_match(:)),points1x(index1_match(:))];
-%        matchedPoints2 = [points2y(index2_match(:)),points2x(index2_match(:))];
-%        figure(2); showMatchedFeatures(image1,image2,matchedPoints1,matchedPoints2,'montage'); title('Positive Samples');
+       matchedPoints1 = [points1y(index1_match(:)),points1x(index1_match(:))];
+       matchedPoints2 = [points2y(index2_match(:)),points2x(index2_match(:))];
+       figure(2); showMatchedFeatures(image1,image2,matchedPoints1,matchedPoints2,'montage'); title('Positive Samples');
 
 %         dist_im = abs(points1x(:)-points1x(matched_id2(matched_id1(:)))) + abs(points1y(:)-points1y(matched_id2(matched_id1(:))));
 %         dist_im = reshape(dist_im, [91, 133]);

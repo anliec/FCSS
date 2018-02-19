@@ -8,7 +8,7 @@ addpath('init_model');
 addpath('model');
 addpath('function');
 
-load('data/fcss/net-epoch.mat');
+load('data/fcss_Tatsunori/net-epoch-10500.mat');
 
 net = dagnn.DagNN.loadobj(net);
 

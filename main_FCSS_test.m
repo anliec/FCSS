@@ -74,8 +74,9 @@ for ii = 1:length(folder_data)
     figure(2); imshow(uint8(im2color)); title('Image 2');
     
     %% FCSS Descriptor (Pre-trained Model)
-    load('data/fcss/net-epoch.mat');
-
+    %load('data/fcss/net-epoch.mat');
+    load('data/fcss_Tatsunori/net-epoch-10500.mat');
+    
     net_FCSS = dagnn.DagNN.loadobj(net);
     net_FCSS.mode = 'test';
     net_FCSS.move('gpu');

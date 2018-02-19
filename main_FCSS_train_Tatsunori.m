@@ -16,14 +16,14 @@ function main_FCSS_train_Tatsunori(varargin)
     net = init_FCSS(init_model);
 
     trainOpts.batchSize = 850;
-    trainOpts.numEpochs = 10500;
+    trainOpts.numEpochs = 800;
     trainOpts.continue = true;
     trainOpts.gpus = 1;
     trainOpts.learningRate = 1e-3;
     trainOpts.derOutputs = {'objective', 1};
-    trainOpts.expDir = 'data/fcss_Tatsunori';
-    trainOpts.expFrequency = 500;
-    trainOpts.fileLog = 'log.out';
+    trainOpts.expDir = 'data/fcss_Lake';
+    trainOpts.expFrequency = 800;
+    trainOpts.fileLog = 'log1e-3.out';
     trainOpts = vl_argparse(trainOpts, varargin);
 
     cnn_train_dag_pairwise_learning(net, imdb, getBatch, trainOpts);

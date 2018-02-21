@@ -55,7 +55,7 @@ end
 writeLogToFile = false;
 if size(opts.fileLog) ~= 0
   writeLogToFile = true;
-  LogFileID = fopen('log.out', 'w');
+  LogFileID = fopen(opts.fileLog, 'w');
 end
 
 % -------------------------------------------------------------------------

@@ -1,3 +1,7 @@
+This is mostly a fork of the original work available at: http://diml.yonsei.ac.kr/%7Esrkim/FCSS/ with some minor addition to adapt it to our particular case.
+
+---
+
 # FCSS (Fully Convolutional Self-Similarity) Descriptor
 
 > Version 1.0 (14 Aug. 2017)
